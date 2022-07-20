@@ -34,13 +34,7 @@ pipeline {
             }
         }
 
-        stage('Quality Gate Check') {
-            steps {
-             timeout(time: 5, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true, credentialsId: 'SONARQUBE_CRED'
-                }
-            }
-        }
+     
         stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
