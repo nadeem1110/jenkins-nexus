@@ -33,6 +33,31 @@ pipeline {
                 }
             }
         }
+	stage('Build') {
+		steps {
+			sh 'docker build -t nadeempatel/test1:latest .'
+		}
+	}
+        stage('Login') {
+
+		steps {
+			sh 'docker login -u nadeempatel -p Bullet@143'
+		}
+	}
+
+	stage('Push') {
+
+		steps {
+			sh 'docker push nadeempatel/test1:latest'
+		}
+	}
+
+
+	    post {
+		    always {
+			    sh 'docker logout'
+		    }
+	    }
    
      
         stage("Publish to Nexus Repository Manager") {
@@ -67,32 +92,7 @@ pipeline {
                     } else {
                         error "*** File: ${artifactPath}, could not be found";
                     }
-                        stage('Build') {
-
-			steps {
-				sh 'docker build -t nadeempatel/test1:latest .'
-			}
-		}
-        stage('Login') {
-
-			steps {
-				sh 'docker login -u nadeempatel -p Bullet@143'
-			}
-		}
-
-		stage('Push') {
-
-			steps {
-				sh 'docker push nadeempatel/test1:latest'
-			}
-		}
-	}
-
-	    post {
-		    always {
-			    sh 'docker logout'
-		    }
-	    }
+                       
 
                 }
             }
