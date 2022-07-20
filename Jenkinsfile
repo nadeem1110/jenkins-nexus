@@ -18,10 +18,26 @@ pipeline {
                 }
             }
         }
+        
         stage("Maven Build") {
             steps {
                 script {
                     sh "mvn package -DskipTests=true"
+                }
+            }
+        }
+        stage('Execute Sonarqube Report') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh "mvn sonar:sonar"
+                }
+            }
+        }
+
+        stage('Quality Gate Check') {
+            steps {
+             timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true, credentialsId: 'SONARQUBE-CRED'
                 }
             }
         }
