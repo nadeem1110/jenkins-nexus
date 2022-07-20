@@ -42,7 +42,7 @@ pipeline {
                             groupId: 'pom.com.mycompany.app',
                             version: 'pom.1.0-SNAPSHOT',
                             repository: 'maven-repo',
-                            credentialsId: 'nexus-cred',
+                            credentialsId: 'NEXUS_CRED',
                             artifacts: [
                                 [artifactId: 'pom.my-app',
                                 classifier: '',
