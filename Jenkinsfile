@@ -64,24 +64,7 @@ pipeline {
                         );
                     } else {
                         error "*** File: ${artifactPath}, could not be found";
-                    }
-			stage('Building Docker Image'){
-         	steps{
-             		script{
-              			sh "docker build . -t nadeempatel/test1:latest"
-             }
-         }
-     }
-         stage('Push Docker Image Dockerhub') {
-            steps {
-                script {
-                 withCredentials([string(credentialsId: 'docker_id', variable: 'pass')]) {
-                    sh 'docker login -u nadeempatel -p Bullet@143'
-                    sh "docker push nadeempatel/test1:latest"
-                 }
-                }
-            }
-                       
+                    }            
 
                 }
             }
