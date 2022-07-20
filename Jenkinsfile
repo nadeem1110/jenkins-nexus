@@ -50,15 +50,7 @@ pipeline {
 		steps {
 			sh 'docker push nadeempatel/test1:latest'
 		}
-	}
-
-
-	    post {
-		    always {
-			    sh 'docker logout'
-		    }
-	    }
-   
+	}  
      
         stage("Publish to Nexus Repository Manager") {
             steps {
