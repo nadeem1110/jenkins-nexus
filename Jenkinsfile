@@ -33,25 +33,25 @@ pipeline {
                 }
             }
         }
-	stage('Build') {
-		steps {
-			sh 'docker build -t nadeempatel/test1:latest .'
-		}
-	}
-        stage('Login') {
-
-		steps {
-			sh 'docker login -u nadeempatel -p Bullet@143'
-		}
-	}
-
-	stage('Push') {
-
-		steps {
-			sh 'docker push nadeempatel/test1:latest'
-		}
-	}  
-     
+	 stage('Building Docker Image'){
+         	steps{
+             		script{
+              			sh "docker build . -t nadeempatel/test1:latest"
+             }
+         }
+     }
+         stage('Push Docker Image Dockerhub') {
+            steps {
+                script {
+                 withCredentials([string(credentialsId: 'docker_id', variable: 'pass')]) {
+                    sh 'docker login -u nadeempatel -p Bullet@143'
+                    sh "docker push nadeempatel/test1:latest"
+                 }
+                }
+            }
+	    
+	    
+	    
         stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
